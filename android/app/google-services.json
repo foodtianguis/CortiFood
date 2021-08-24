@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "865765862638",
+    "project_id": "cortifood-567b0",
+    "storage_bucket": "cortifood-567b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865765862638:android:2326adfb62adafb57ad7ff",
+        "android_client_info": {
+          "package_name": "kick.CortiFood.App"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865765862638-6o7oa0c213pk206c4untqo41u03t03a0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-2MIeM-6da16LY-ollsnTxZk4mVOBrrw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "865765862638-6o7oa0c213pk206c4untqo41u03t03a0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
