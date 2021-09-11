@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
 import 'package:dartxero/Pagos/ShowDialogToDismiss.dart';
 import 'package:flutter/material.dart';
-import 'package:stripe_payment/stripe_payment.dart';
+//import 'package:stripe_payment/stripe_payment.dart';
 
 class PaymentClass extends StatefulWidget {
   @override
@@ -11,25 +11,25 @@ class PaymentClass extends StatefulWidget {
 }
 
 class _PaymentClass extends State<PaymentClass> {
-  Token _paymentToken;
-  PaymentMethod _paymentMethod;
+  //Token _paymentToken;
+  //PaymentMethod _paymentMethod;
   String _error;
 
   //this client secret is typically created by a backend system
   //check https://stripe.com/docs/payments/payment-intents#passing-to-client
   final String _paymentIntentClientSecret = null;
 
-  PaymentIntentResult _paymentIntent;
-  Source _source;
+  //PaymentIntentResult _paymentIntent;
+  //Source _source;
 
   ScrollController _controller = ScrollController();
-
+/*
   final CreditCard testCard = CreditCard(
     number: '5204 1656 9171 7197',
     expMonth: 08,
     expYear: 25,
     country: "Mexico",
-  );
+  );*/
 
 
 
@@ -38,12 +38,12 @@ class _PaymentClass extends State<PaymentClass> {
   @override
   initState() {
     super.initState();
-
+/*
     StripePayment.setOptions(StripeOptions(
         merchantId: sNomApp,
         publishableKey: "pk_live_51IykDEHwUHMi8YMJBPQmZnfoilB2lNzcIxvn6CMDIJXYryTi9J89UOkSwXFxmzPsKj6UE5wPdrgtISZSabOfZ53700sVC4Ksm7",));
+*/
   }
-
   void setError(dynamic error) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(error.toString())));
     setState(() {
@@ -63,10 +63,10 @@ class _PaymentClass extends State<PaymentClass> {
               icon: Icon(Icons.clear),
               onPressed: () {
                 setState(() {
-                  _source = null;
-                  _paymentIntent = null;
-                  _paymentMethod = null;
-                  _paymentToken = null;
+               //   _source = null;
+               ///   _paymentIntent = null;
+               //   _paymentMethod = null;
+               //   _paymentToken = null;
                 });
               },
             )
@@ -75,7 +75,7 @@ class _PaymentClass extends State<PaymentClass> {
         body: ListView(
           controller: _controller,
           padding: const EdgeInsets.all(20),
-          children: <Widget>[
+          children: <Widget>[/*
             RaisedButton(
               child: Text("Create Source"),
               onPressed: () {
@@ -243,7 +243,7 @@ class _PaymentClass extends State<PaymentClass> {
               style: TextStyle(fontFamily: "Monospace"),
             ),
             Divider(),
-            Text('Current error: $_error'),
+            Text('Current error: $_error'),*/
           ],
         ),
       ),

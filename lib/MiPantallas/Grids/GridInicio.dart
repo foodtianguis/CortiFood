@@ -135,7 +135,7 @@ class _GridInicioState extends State<GridInicio> {
             Container(
               child: Text(
                 character.menuNombre ?? '',
-                //style: EstiloLetraLB,
+                style: character.menuNombre.length >= 20 ? TextStyle(fontSize: 10.0) : TextStyle(fontSize: 15.0),
               ),
               alignment: Alignment.centerLeft,
             ),

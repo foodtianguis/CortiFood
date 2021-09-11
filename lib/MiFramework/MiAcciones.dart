@@ -148,8 +148,14 @@ String sMensajeErrorComp(String Campo){
 ImageProvider Imagen(String BASE64_STRING) {
   if (BASE64_STRING == null)
     BASE64_STRING = SinImagen;
+  Uint8List bytes;
   //Image img = Image.memory(base64Decode(BASE64_STRING));
-  Uint8List bytes = base64Decode(BASE64_STRING);
+  try {
+    bytes = base64Decode(BASE64_STRING);
+  }
+  on Exception catch (ex){
+    bytes = base64Decode(SinImagen);
+  }
   return MemoryImage(bytes);
 }
 

@@ -257,7 +257,7 @@ final String sNomApp = 'CortiFood';
 
 //                        Mensajes Loguin
 //                  Direccion ip URL de conexion
-final String sIP = '189.252.69.82';
+final String sIP = '189.252.81.134';
 //final String sIP = 'localhost';
 final String sURL = 'http://${sIP}/ApiTest/';
 final String sApiKey = 'AIzaSyC0oJ2-IUW_yU9mNU85lu_pq0mMVAFyLTI';
