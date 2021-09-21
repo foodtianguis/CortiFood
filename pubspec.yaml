@@ -65,7 +65,7 @@ dependencies:
   flutter_credit_card: ^2.0.0
   flutter_pay: ^1.0.1
   stripe_native: ^1.2.3
-  stripe_payment: ^1.1.1
+  #stripe_payment: ^1.1.1
   #flutter_stripe: ^1.0.2
 
 
@@ -79,7 +79,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "Utilerias/Icon/LogoGIOS.png"
+  image_path: "Utilerias/Imagen/Cortifood.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -106,6 +106,8 @@ flutter:
    - Utilerias/Imagen/gulaConirac.png
    - Utilerias/Imagen/gulaConiracGrnade.png
    - Utilerias/Imagen/gulaLetrasMap.png
+   - Utilerias/Imagen/Cortifood.png
+   - Utilerias/Imagen/CortifoodGrande.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

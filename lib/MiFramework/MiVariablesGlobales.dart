@@ -26,7 +26,7 @@ Image FotoUser = Image.asset(
   width: 250,
 );
 
-String sLogoPerfilDefault = 'Utilerias/Icon/LogoG.png';
+String sLogoPerfilDefault = 'Utilerias/Imagen/Cortifood.png';
 String sLogoMap = 'Utilerias/Imagen/gulaLetrasMap.png';
 
 //                  Loguin
@@ -165,13 +165,13 @@ Map<int, Color> color = {
 //                Color App
 final Color ColorApp = Colors.grey[200];
 
-final MaterialColor ColorAppMat = Colors.lime;
+final MaterialColor ColorAppMat = Colors.deepOrange;
 
 final Color ColorFondoApp = Colors.white;
 final Color ColorFondo = Colors.black12;
 //                Colores de componentes
 final Color ColorLabel = Colors.orange[900];
-final Color ColorDescr = Colors.grey[300];
+final Color ColorDescr = Colors.grey;
 
 //                boton                       //
 //final Color ColorBoton = Colors.green;
@@ -257,9 +257,9 @@ final String sNomApp = 'CortiFood';
 
 //                        Mensajes Loguin
 //                  Direccion ip URL de conexion
-final String sIP = '189.252.81.134';
+final String sIP = '74.208.35.164';
 //final String sIP = 'localhost';
-final String sURL = 'http://${sIP}/ApiTest/';
+final String sURL = 'http://${sIP}/Cortifood/';
 final String sApiKey = 'AIzaSyC0oJ2-IUW_yU9mNU85lu_pq0mMVAFyLTI';
 //final String sURL = 'http://${sIP}';
 //

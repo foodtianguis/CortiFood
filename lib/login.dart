@@ -71,7 +71,7 @@ class _loginPageState extends State<loginPage> {
           padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
           child: ListView(
             children: <Widget>[
-              Icon(FontAwesomeIcons.userNinja, color: Colors.grey,size: 200,),
+              Icon(FontAwesomeIcons.userNinja, color: ColorApp,size: 200,),
               SizedBox(height: 20,),
               sLabelGen(
                 nIndex: 0,
