@@ -513,6 +513,7 @@ class _FormDatosRestaurantState extends State<FormDatosRestaurant> {
               labels: sDiasSemana,
               checked: ChkDiasLaborales,
               labelStyle: EstiloLetraLB,
+              checkColor: ColorBtnTxt,
               //disabled: ["Wednesday","Friday"],
               onChange: (isChecked, label, index) {},
               onSelected: (List<String> checked) {
@@ -634,6 +635,7 @@ class _FormDatosRestaurantState extends State<FormDatosRestaurant> {
                 labels: sTipoOrden,
                 checked: ChkTipoServicio,
                 labelStyle: EstiloLetraLB,
+                checkColor: ColorBtnTxt,
                 //checked: (TipoAccion == 1)? [] : (TipoAccion == 2) ? Restaurant.TipoServ:[],
                 //disabled: ["Wednesday","Friday"],
                 onChange: (bool isChecked, String label, int index) => print(
@@ -663,7 +665,8 @@ class _FormDatosRestaurantState extends State<FormDatosRestaurant> {
                   padding: EdgeInsets.only(top: 10),
                 )
               : Container(),
-          Container(
+          TipoAccion == 2
+              ?Container(
             //alignment: Alignment.center,
             padding: EdgeInsets.only(top: 5),
             child: TipoAccion == 2
@@ -673,7 +676,7 @@ class _FormDatosRestaurantState extends State<FormDatosRestaurant> {
                 : UbicaBtn(
                     llTraeUbica: null,
                   ),
-          ),
+          ): Container(),
           Container(
             alignment: Alignment.center,
             child: Column(
@@ -872,6 +875,7 @@ class UbicaBtn extends StatelessWidget {
         color: ColorBoton,
         splashColor: splashBtn,
         disabledColor: disabledBth,
+        textColor: ColorBtnTxt,
         padding: llTraeUbica != null
             ? EdgeInsets.only(left: 118.0, right: 116.0)
             : EdgeInsets.only(left: 165.0, right: 165.0),

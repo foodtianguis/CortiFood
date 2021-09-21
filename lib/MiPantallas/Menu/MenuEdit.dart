@@ -38,8 +38,15 @@ class _MenuEditState extends State<MenuEdit> {
   }
 
   ImageProvider ImagenMenu(int id_menu)  {
-    ImageMenuStr(id_menu);
-    Uint8List bytes = base64Decode(BASE64_STRING != null? BASE64_STRING : SinImagen);
+    Uint8List bytes;
+    try {
+      ImageMenuStr(id_menu);
+      bytes = base64Decode(
+          BASE64_STRING != null ? BASE64_STRING : SinImagen);
+    }
+    on Exception catch(ex){
+      bytes = base64Decode(SinImagen);
+    }
     return MemoryImage(bytes);
   }
 
@@ -398,9 +405,16 @@ class _MenuEditState extends State<MenuEdit> {
   }
 
   Image Imagen (String BASE64_STRING){
-    Uint8List bytes = base64Decode(BASE64_STRING);
+    Uint8List bytes;
     print(BASE64_STRING);
-    return Image(image: MemoryImage(bytes), width: 200, height: 200, fit: BoxFit.cover,);
+    try {
+      bytes = base64Decode(BASE64_STRING);
+    }
+    on Exception catch (ex){
+      bytes = base64Decode(SinImagen);
+    }
+    return Image(
+      image: MemoryImage(bytes), width: 200, height: 200, fit: BoxFit.cover,);
   }
 
   Future<void> PlatilloEdit(int id_menu, int id_restaurant) async {

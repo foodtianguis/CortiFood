@@ -127,6 +127,8 @@ class _GridInicioState extends State<GridInicio> {
         child: Column(
           children: [
             Container(
+              height: 100,
+              width: 150,
               child: Image(
                   height: 130.0,
                   width: 210.0,
@@ -135,7 +137,7 @@ class _GridInicioState extends State<GridInicio> {
             Container(
               child: Text(
                 character.menuNombre ?? '',
-                style: character.menuNombre.length >= 20 ? TextStyle(fontSize: 10.0) : TextStyle(fontSize: 15.0),
+                style: character.menuNombre.length >= 15 ? TextStyle(fontSize: 10.0) : TextStyle(fontSize: 15.0),
               ),
               alignment: Alignment.centerLeft,
             ),
@@ -143,7 +145,7 @@ class _GridInicioState extends State<GridInicio> {
               child: Text(
                 '\$ ${character.Precio ?? ''}0',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: ColorLabel),
               ),

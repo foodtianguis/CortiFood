@@ -98,7 +98,7 @@ class RegistrarNuevo extends StatelessWidget {
         children: <Widget>[
           Icon(
             FontAwesomeIcons.userPlus,
-            color: ColorFondoApp,
+            color: ColorBtnTxt,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0),
@@ -129,7 +129,7 @@ class RegistrarNuevaEmpresa extends StatelessWidget {
         children: <Widget>[
           Icon(
             Icons.business,
-            color: ColorFondoApp,
+            color: ColorBtnTxt,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0),
@@ -314,28 +314,31 @@ class GetCheckValueState extends State<GetCheckValue> {
   Widget build(BuildContext context) {
     return Container(
         child: Row(children: [
-      Checkbox(
-        value:
-            _myPreferences.automatic == Null ? false : _myPreferences.automatic,
-        onChanged: (val) {
-          setState(() {
-            //timeDilation != 1.0;
-            timeDilation = val ? 5.0 : 1.0;
-            print(val.toString());
-            _myPreferences.automatic =
-                val == null ? _myPreferences.automatic : val;
-            print(val.toString());
-            //  _myPreferences.commit();
-            _isChecked = val;
-            bRecorUser = _isChecked;
-          });
-        },
-      ),
-      Text(
-        sRecUser,
-        style: EstiloLetraLB,
-      ),
-    ]));
+          Checkbox(
+            checkColor: ColorBtnTxt,
+            value:
+                _myPreferences.automatic == Null ? false : _myPreferences.automatic,
+              onChanged: (val) {
+                setState(() {
+                  //timeDilation != 1.0;
+                  timeDilation = val ? 5.0 : 1.0;
+                  print(val.toString());
+                  _myPreferences.automatic =
+                      val == null ? _myPreferences.automatic : val;
+                  print(val.toString());
+                  //  _myPreferences.commit();
+                  _isChecked = val;
+                  bRecorUser = _isChecked;
+                });
+              },
+            ),
+            Text(
+              sRecUser,
+              style: EstiloLetraLB,
+            ),
+          ]
+        )
+    );
   }
 }
 

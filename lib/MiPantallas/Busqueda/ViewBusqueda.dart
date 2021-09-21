@@ -55,7 +55,7 @@ class ViewBusquedaState extends State<ViewBusqueda> {
   }
 
   Container _tile(context, data) => Container(
-          child: Row(children: [
+      child: Row(children: [
         Container(
           height: 97.0,
           width: 130.0,
@@ -70,6 +70,7 @@ class ViewBusquedaState extends State<ViewBusqueda> {
           ),
         ),
         Column(
+          //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               width: 120,
@@ -81,8 +82,10 @@ class ViewBusquedaState extends State<ViewBusqueda> {
                     color: ColorLabel),
               ),
             ),
-            SizedBox(
-              width: 5,
+            Flexible(
+              child: SizedBox(
+                width: 5,
+              ),
             ),
             Container(
               width: 120,
@@ -103,8 +106,9 @@ class ViewBusquedaState extends State<ViewBusqueda> {
           child: SizedBox(
             child: Text(
               '\$ ' + data.Precio.toString() + '0',
+              style: TextStyle(fontSize: 15),
             ),
-            width: 50,
+            width: 40,
           ),
         ),
         Flexible(
@@ -245,8 +249,10 @@ class ViewBusquedaState extends State<ViewBusqueda> {
         ),
         Row(
           children: [
-            SizedBox(
-              width: 30,
+            Flexible(
+              child: SizedBox(
+                width: 30,
+              ),
             ),
             RaisedButton(
               child: Text(
@@ -263,9 +269,11 @@ class ViewBusquedaState extends State<ViewBusqueda> {
                 //PedidoMenu(0,0, 0,"Comentarios");
               },
             ),
-            SizedBox(
-              width: 50,
-            ),
+          Flexible(
+            child: SizedBox(
+                    width: 50,
+                  ),
+          ),
             RaisedButton(
               child: Text(
                 sAddCarrito,

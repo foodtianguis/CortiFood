@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dartxero/Maps/MapFloat.dart';
 import 'package:dartxero/MiFramework/MiEstilos.dart';
 import 'package:dartxero/MiFramework/MiFramework.dart';
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
@@ -27,6 +28,8 @@ class _AddUserEmpresa extends State<AddUserEmpresa> {
 
   String sValidaNombre = '';
   String sValidaNum = '';
+
+  bool _TieneUbicacion;
 
   _sValida(String Tabla, String Campo, String Value) async {
     print("Valor: ${Value}");
@@ -91,6 +94,68 @@ class _AddUserEmpresa extends State<AddUserEmpresa> {
     ctrl.txtCiudad.text = '';
     ctrl.txtColonia.text = '';
   }
+
+  void vMapFloatlcl(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              content: Stack(
+                overflow: Overflow.visible,
+                children: <Widget>[
+                  Positioned(
+                    right: -40.0,
+                    top: -40.0,
+                    child: InkResponse(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: CircleAvatar(
+                        child: Icon(
+                          Icons.close,
+                        ),
+                        backgroundColor: Colors.red,
+                        radius: 15,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 430,
+                    child: Column(
+                      children: [
+                        MapFloat(),
+                        Flexible(
+                          child: SizedBox(
+                            height: 15,
+                          ),
+                        ),
+                        MaterialButton(
+                            color: ColorApp,
+                            textColor: ColorFondoApp,
+                            child: Text(
+                              sConfirma,
+                              style: EstiloLetraBtn,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _TieneUbicacion = UbicacionUsuario != null;
+                                if (_TieneUbicacion) {
+                                  ctrl.txtDomicilioEmp.text = UbicacionUsuario.Ubicacion;
+                                  ctrl.txtCP.text = UbicacionUsuario.UbicacionCP;
+                                  ctrl.txtColonia.text = UbicacionUsuario.Colonia;
+                                }
+                              });
+                              Navigator.of(context).pop();
+                              //Navigator.pop(context);
+                            })
+                      ],
+                    ),
+                  ),
+                ],
+              ));
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +290,79 @@ class _AddUserEmpresa extends State<AddUserEmpresa> {
                     }),
                 padding: EdgeInsets.only(top: 10.0),
               ),
+              Row(
+                children: [
+                  Expanded(
+                    //width: 300,
+                    child: Container(
+                      child: sLabelGen(
+                        nIndex: 2,
+                        sTitulo: sDomicilio,
+                        txtController: ctrl.txtDomicilioEmp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 30,
+                    child: MaterialButton(
+                      color: ColorApp,
+                      textColor: ColorLabel,
+                      child: iUbicaSys,
+                      padding: EdgeInsets.all(0),
+                      shape: CircleBorder(),
+                      onPressed: () {
+                        setState(() {
+                          vMapFloatlcl(context);
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
               Container(
+                child: TextFormField(
+                    decoration: InpDecoTxt(sCP),
+                    style: EstiloLetraLB,
+                    controller: ctrl.txtCP,
+                    enabled: false,
+                    onChanged: (value) {
+                      if (value.isEmpty) {
+                        return sMensajeErrorComp(sCP);
+                      } else {
+                        fn_TraeDatosXcp(value);
+                        if (traeInfoCP != null) {
+                          //ctrl.txtColonia.text = traeInfoCP.Nombre_Colonia;
+                          //ctrl.txtCiudad.text = traeInfoCP.Nombre_municipio;
+                        }
+                      }
+                    },
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return sMensajeErrorComp(sCP);
+                      }
+                      return null;
+                    }),
+                padding: EdgeInsets.only(top: 10.0),
+              ),
+              Container(
+                child: TextFormField(
+                    decoration: InpDecoTxt(sColonia),
+                    style: EstiloLetraLB,
+                    controller: ctrl.txtColonia,
+                    enabled: false,
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return sMensajeErrorComp(sColonia);
+                      }
+                      return null;
+                    }),
+                padding: EdgeInsets.only(top: 10.0),
+              ),
+              /*Container(
                 child: TextFormField(
                     decoration: InpDecoTxt(sCP),
                     style: EstiloLetraLB,
@@ -263,7 +400,7 @@ class _AddUserEmpresa extends State<AddUserEmpresa> {
                 nIndex: 2,
                 sTitulo: sCiudad,
                 txtController: ctrl.txtCiudad,
-              ),
+              ),*/
               sLabelGen(
                 nIndex: 2,
                 sTitulo: sNumInt,
@@ -377,14 +514,18 @@ class _AddDatosEmpresa extends State<AddDatosEmpresa> {
       'TipoRestaurant': ctrl.txtTipoRestaurantEmp.text,
       'Telefono': ctrl.txtTelefonoEmp.text,
       'Domicilio': ctrl.txtDomicilioEmp.text,
+      'cp': ctrl.txtCP.text,
+      'Colonia': ctrl.txtColonia.text,
       'Sector': "0", //ctrl.txtSectorEmp.text,
       'DiasLaborales': ctrl.txtDiasLaboralesEmp.text,
       'horario': ctrl.txtHorarioEmp.text,
       'Activo': 'ACTIVO',
       'logo': img64, //sImagen(imageFile),
       'FechaReg': DateTime.now().toIso8601String(),
-      'Latitud': dLatitud,
-      'Longitud': dLongitud,
+      //'Latitud': dLatitud,
+      //'Longitud': dLongitud,
+      'Latitud': UbicacionUsuario.Latitud.toString(),
+      'Longitud': UbicacionUsuario.Longitud.toString(),
     });
     print("Estatus: ${response.statusCode}");
     if (response.statusCode == 201 || response.statusCode == 200) {
