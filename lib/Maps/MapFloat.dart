@@ -1,16 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:typed_data';
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
-import 'package:dartxero/MiFramework/miAccionesGlobales.dart';
 import 'package:dartxero/MiModel/UbicacionModel.dart';
-import 'package:dartxero/MiPantallas/BandejaEntrada.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_pay/flutter_pay.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';

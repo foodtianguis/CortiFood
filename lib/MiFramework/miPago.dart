@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
+//import 'package:flutter_credit_card/flutter_credit_card.dart';
 //import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:http/http.dart' as http;
 
@@ -60,7 +60,7 @@ class _miPago extends State<miPago> {
 
   ListView TarjetaDebito(){
     return ListView(children: [
-      CreditCardWidget(
+      /*CreditCardWidget(
         cardNumber: _cardNumber,
         expiryDate: _DateExpiret,
         cardHolderName: _CardNombre,
@@ -107,6 +107,7 @@ class _miPago extends State<miPago> {
           labelText: 'Card Holder',
         ),
       )
+      */
     ],);
   }
 

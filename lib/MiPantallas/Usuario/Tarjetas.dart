@@ -2,15 +2,11 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'package:dartxero/MiFramework/MiAcciones.dart';
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
-import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
-import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
 import 'package:dartxero/MiFramework/VentanasMensajes/MensajesSys.dart';
 import 'package:dartxero/MiFramework/miAccionesGlobales.dart';
 import 'package:dartxero/Pagos/MiWidgetTarjeta.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
+//import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:http/http.dart' as http;
-import 'package:dartxero/MiFramework/MiEstilos.dart';
-import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
 import 'package:dartxero/MiModel/TarjetaModel.dart';
 import 'package:flutter/material.dart';
 import 'package:dartxero/MiFramework/MiControllerGlobales.dart' as ctrl;
@@ -114,7 +110,8 @@ class _FormTarjeta extends State<FormTarjeta>{
         obscureCardCvv: widget.nAccion == 2,
         cardBgColor:  _ColorTarjeta,
       ),
-      CreditCardForm(
+    /*
+    CreditCardForm(
         formKey: _formKey, // Required
         onCreditCardModelChange: (CreditCardModel data) {
           setState(() {
@@ -160,6 +157,7 @@ class _FormTarjeta extends State<FormTarjeta>{
         ),
 
       ),
+      */
       SizedBox(height: 15,),
       Container(
         child: TextFormField(
@@ -223,7 +221,7 @@ class _FormTarjeta extends State<FormTarjeta>{
     );
   }
 
-
+/*
   Map<CardType, Set<List<String>>> cardNumPatterns =
   <CardType, Set<List<String>>>{
     CardType.visa: <List<String>>{
@@ -319,7 +317,7 @@ class _FormTarjeta extends State<FormTarjeta>{
 
     return cardType;
   }
-
+*/
   Future<void> AddTarjeta() async {
     //final repose = await http.post("${sURL}Usuario/AddTarjeta",
     final repose = await http.post(CadenaConexion('/Usuario/AddTarjeta'),

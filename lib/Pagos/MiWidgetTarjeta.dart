@@ -2,15 +2,15 @@ import 'dart:math';
 
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/credit_card_widget.dart';
-
+//import 'package:flutter_credit_card/credit_card_widget.dart';
+/*
 const Map<CardType, String> CardTypeIconAsset = <CardType, String>{
   CardType.visa: 'icons/visa.png',
   CardType.americanExpress: 'icons/amex.png',
   CardType.mastercard: 'icons/mastercard.png',
   CardType.discover: 'icons/discover.png',
 };
-
+*/
 class MiWidgetTarjeta extends StatefulWidget {
   const MiWidgetTarjeta({
     Key key,
@@ -28,7 +28,7 @@ class MiWidgetTarjeta extends StatefulWidget {
     this.obscureCardCvv = true,
     this.labelCardHolder = 'CARD HOLDER',
     this.labelExpiredDate = 'MM/YY',
-    this.cardType,
+   // this.cardType,
   }) : super(key: key);
 
   final String cardNumber;
@@ -47,7 +47,7 @@ class MiWidgetTarjeta extends StatefulWidget {
   final String labelCardHolder;
   final String labelExpiredDate;
 
-  final CardType cardType;
+  //final CardType cardType;
 
   @override
   _MiWidgetTarjeta createState() => _MiWidgetTarjeta();
@@ -73,7 +73,7 @@ class _MiWidgetTarjeta extends State<MiWidgetTarjeta>
       vsync: this,
     );
 
-    _ColorTarjeta = ColorTarjeta(widget.cardNumber);
+   // _ColorTarjeta = ColorTarjeta(widget.cardNumber);
 
     _backgroundGradientColor = backgroundGradientColor();
 
@@ -149,14 +149,14 @@ class _MiWidgetTarjeta extends State<MiWidgetTarjeta>
 
     return Stack(
       children: <Widget>[
-        AnimationCard(
+        /*AnimationCard(
           animation: _frontRotation,
           child: buildFrontContainer(width, height, context, orientation),
         ),
         AnimationCard(
           animation: _backRotation,
           child: buildBackContainer(width, height, context, orientation),
-        ),
+        ),*/
       ],
     );
   }
@@ -247,9 +247,9 @@ class _MiWidgetTarjeta extends State<MiWidgetTarjeta>
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: widget.cardType != null
+                /*child: widget.cardType != null
                     ? getCardTypeImage(widget.cardType)
-                    : getCardTypeIcon(widget.cardNumber),
+                    : getCardTypeIcon(widget.cardNumber),*/
               ),
             ),
           ),
@@ -304,9 +304,9 @@ class _MiWidgetTarjeta extends State<MiWidgetTarjeta>
             alignment: Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-              child: widget.cardType != null
+              /*child: widget.cardType != null
                   ? getCardTypeImage(widget.cardType)
-                  : getCardTypeIcon(widget.cardNumber),
+                  : getCardTypeIcon(widget.cardNumber),*/
             ),
           ),
           Expanded(
@@ -351,6 +351,7 @@ class _MiWidgetTarjeta extends State<MiWidgetTarjeta>
   /// Credit Card prefix patterns as of March 2019
   /// A [List<String>] represents a range.
   /// i.e. ['51', '55'] represents the range of cards starting with '51' to those starting with '55'
+  /*
   Map<CardType, Set<List<String>>> cardNumPatterns =
   <CardType, Set<List<String>>>{
     CardType.visa: <List<String>>{
@@ -520,6 +521,7 @@ class _MiWidgetTarjeta extends State<MiWidgetTarjeta>
 
     return Result;
   }
+  */
 }
 
 
