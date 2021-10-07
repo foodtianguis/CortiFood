@@ -257,16 +257,17 @@ final String sNomApp = 'CortiFood';
 
 //                        Mensajes Loguin
 //                  Direccion ip URL de conexion
-final String sIP = '74.208.35.164';
-//final String sIP = 'localhost';
-final String sURL = 'http://${sIP}/Cortifood/';
+//final String sIP = '74.208.35.164';
+final String sIP = '189.252.129.117';
+
+//final String sURL = 'http://${sIP}/Cortifood/';
+final String sURL = 'http://${sIP}/ApiTest/';
 final String sApiKey = 'AIzaSyC0oJ2-IUW_yU9mNU85lu_pq0mMVAFyLTI';
-//final String sURL = 'http://${sIP}';
 //
 
 final String sNomUser =
     'Número Telefonico'; //'Nombre de Usuario o Número Telefonico';
-final String sNomUserEmp = 'Usuario Empresarial';
+final String sNomUserEmp = 'Usuario Restaurante';
 final String sPassword = 'Contraseña';
 final String sPasswordConf = 'Confirmar Contraseña';
 final String sEntrar = "Entrar";

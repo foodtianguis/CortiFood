@@ -73,9 +73,7 @@ class _miMenuState extends State<miMenu> {
           data.foto != null ? Image(height: 97.0, width: 130.0, image:Imagen(data.foto),) : Container(child: Center(child: Text('No Hay Foto',)), height: 97.0, width: 130.0,),
           //decoration: esMarcoFotos,
         ),
-        SizedBox(
-          width: 10,
-        ),
+        Flexible(child: SizedBox(width: 0,),flex: 3,fit: FlexFit.tight,),
         Column(
           children: [
             Container(
@@ -110,8 +108,9 @@ class _miMenuState extends State<miMenu> {
             children: [
               SizedBox(
                   child: Text('\$ ' + data.Precio.toString() + '0',),
-                  width: 70,
+                  //width: 50,
                 ),
+              SizedBox(width: 5,),
               Container(
                 alignment: Alignment.centerLeft,
                 width: 35,

@@ -3,12 +3,15 @@ import 'dart:io';
 import 'dart:math';
 import 'package:dartxero/Acciones/Pedidos/AccionPedido.dart';
 import 'package:dartxero/MiFramework/MiAcciones.dart';
+import 'package:dartxero/MiFramework/MiComponenteGlobales.dart';
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
 import 'package:dartxero/MiFramework/VentanasMensajes/MensajeUsuario.dart';
 import 'package:dartxero/MiFramework/miAccionesGlobales.dart';
 import 'package:dartxero/MiModel/CarritoEncaModel.dart';
 import 'package:dartxero/MiModel/CarritoModel.dart';
+import 'package:dartxero/MiModel/EncaCarritoModel.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart';
 
@@ -28,6 +31,9 @@ class ViewCarritoState extends State<ViewCarrito> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   var refreshKeyHist = GlobalKey<RefreshIndicatorState>();
 
+  String _CP;
+  String _Colonia;
+
   Future<void> AsignaEnca(int id_usuario) async {
     final aux = await EncabezadoCarrito(id_usuario);
     setState(() {
@@ -40,24 +46,13 @@ class ViewCarritoState extends State<ViewCarrito> {
     super.initState();
     setState(() {
       AsignaEnca(widget.id_usuario);
+
+      _CP = user.cp;
+      _Colonia = user.Colonia;
     });
 
     random = Random();
     refreshList();
-  }
-
-  ListView _jobsListView(data, Estatus) {
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        itemCount: data.length,
-        itemBuilder: (context, index) {
-          return Container(
-            child: _tile(context, data[index], Estatus),
-            padding: EdgeInsets.only(bottom: 5.0),
-          );
-        });
   }
 
   ListView Lista(int Estatus) {
@@ -75,8 +70,8 @@ class ViewCarritoState extends State<ViewCarrito> {
                       Estatus == 1
                           ? 'Carrito Vacio'
                           : Estatus == 2
-                              ? "No hay Guardados"
-                              : "No hay Eliminados",
+                          ? "No hay Guardados"
+                          : "No hay Eliminados",
                       style: Estiloletrasbdj,
                     ),
                   ),
@@ -102,7 +97,270 @@ class ViewCarritoState extends State<ViewCarrito> {
     );
   }
 
+  ListView _jobsListView(data, Estatus) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return Container(
+            child: _tile(context, data[index], Estatus),
+            padding: EdgeInsets.only(bottom: 5.0),
+          );
+        });
+  }
+
   Container _tile(context, data, Estatus) => Container(
+    color: ColorFondo,
+    padding: EdgeInsets.only(bottom: 5),
+    //decoration: BoxDecoration(border: Border.all(color: ColorLineas,width: 0.2,),borderRadius: BorderRadius.circular(10),),
+    child: Column(
+      children: [
+        Row(children: [
+          Container(
+            height: 97.0,
+            width: 130.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft:
+                    Radius.circular(10.0)), //color: Colors.cyanAccent,
+                image: DecorationImage(image: Imagen(data.menufoto))),
+          ),
+          Flexible(
+            child: SizedBox(
+              width: 10,
+            ),
+          ),
+          Column(
+            children: [
+              Container(
+                width: 120,
+                height: 20,
+                child: Text(
+                  data.menuNombre,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: 120,
+                height: 70,
+                child: Text(
+                  data.menuDescripcion ?? '',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Flexible(
+            child: SizedBox(
+              width: 10,
+            ),
+          ),
+          Column(
+            children: [
+              Container(
+                width: 120,
+                height: 20,
+                child: Text(
+                  data.RestaurantNombre,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Container(
+                width: 120,
+                height: 20,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      child: Text("Cantidad:"),
+                      width: 60,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        "${data.CarritoDetalleCantidad}",
+                        textAlign: TextAlign.right,
+                      ),
+                      width: 60,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: 120,
+                height: 20,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      child: Text("Precio: "),
+                      width: 45,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        "\$ ${data.menuPrecio}0",
+                        textAlign: TextAlign.right,
+                      ),
+                      width: 75,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: 120,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      child: Text(
+                        'Total:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                      ),
+                      width: 45,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        '\$ ' +
+                            (data.menuPrecio * data.CarritoDetalleCantidad)
+                                .toString() +
+                            '0',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                      width: 75,
+                    ),
+                  ],
+                ),
+                //width: 70,
+              ),
+              Container(
+                height: 15,
+              ),
+            ],
+          ),
+        ]),
+        //Divider(color: Colors.black12,height: 10, thickness: 2,),
+        SeparadorFit,
+        Row(
+          children: [
+            GestureDetector(
+                child: Link(sComprar),
+                //Text("Comprar", style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
+                onTap: () {
+                  //vMensajeSys(context, "Click", 4);
+                  setState(() {
+                    //PedidoCarritoDetalle(data.Carritoid_Usuario, data.CarritoDetalleid_CarritoDetalle);
+                    RealizaCompra(context, data);
+                  });
+                }),
+            SizedBox(
+              width: 20,
+            ),
+            GestureDetector(
+                child: Estatus == 1
+                    ? Link("Guardar")
+                    : Link("Agregar al Carrito"),
+                //Text("Guardar", style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)):
+                //Text("Agregar al Carrito", style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
+                onTap: () {
+                  //vMensajeSys(context, "Click", 3);
+                  setState(() {
+                    if (Estatus == 1)
+                      AccionesCarrito(
+                          data.CarritoDetalleid_CarritoDetalle, 2);
+                    else if (Estatus == 2)
+                      AccionesCarrito(
+                          data.CarritoDetalleid_CarritoDetalle, 1);
+                  });
+                }),
+            SizedBox(
+              width: 20,
+            ),
+            GestureDetector(
+                child: Link("Eliminar"),
+                //Text("Eliminar", style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
+                onTap: () {
+                  AccionesCarrito(data.CarritoDetalleid_CarritoDetalle, 3);
+                }),
+          ],
+        )
+      ],
+    ),
+  );
+
+  ListView EncaLista(int Estatus, String CP, String Colonia) {
+    return ListView(
+      children: <Widget>[
+        FutureBuilder<List<EncaCarritoModel>>(
+          future: ListViewEncaCarrito(widget.id_usuario, Estatus, CP, Colonia),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<EncaCarritoModel> data = snapshot.data;
+              if (data.length == 0)
+                return Container(
+                  child: Center(
+                    child: Text(
+                      Estatus == 1
+                          ? 'Carrito Vacio'
+                          : Estatus == 2
+                          ? "No hay Guardados"
+                          : "No hay Eliminados",
+                      style: Estiloletrasbdj,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 200),
+                );
+              else
+                return _EncaListView(data, Estatus);
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: ColorApp,
+                valueColor: new AlwaysStoppedAnimation<Color>(splashBtn),
+              ),
+            );
+          },
+        ),
+        SizedBox(
+          height: 200,
+        ),
+      ],
+    );
+  }
+
+  ListView _EncaListView(data, Estatus) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return Container(
+            child: _Encabezado(context, data[index], Estatus),
+            padding: EdgeInsets.only(bottom: 5.0),
+          );
+        });
+  }
+
+  Container _Encabezado(context, data, Estatus) => Container(
         color: ColorFondo,
         padding: EdgeInsets.only(bottom: 5),
         //decoration: BoxDecoration(border: Border.all(color: ColorLineas,width: 0.2,),borderRadius: BorderRadius.circular(10),),
@@ -112,75 +370,61 @@ class ViewCarritoState extends State<ViewCarrito> {
               Container(
                 height: 97.0,
                 width: 130.0,
+                child: Icon(Icons.shopping_cart_outlined,color: ColorAppMat,size: 50,),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft:
                             Radius.circular(10.0)), //color: Colors.cyanAccent,
-                    image: DecorationImage(image: Imagen(data.menufoto))),
+                    //image: DecorationImage(image: Imagen(data.menufoto))
+                ),
               ),
-              SizedBox(
-                width: 10,
+              Flexible(
+                  child: SizedBox(
+                width: 5,
+                ),
               ),
               Column(
                 children: [
-                  Container(
-                    width: 120,
-                    height: 20,
-                    child: Text(
-                      data.menuNombre,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
+                  Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        //height: 20,
+                        child: Text(
+                          data.RestaurantNombre,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: 120,
-                    height: 70,
-                    child: Text(
-                      data.menuDescripcion ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10,
-                      ),
-                    ),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(
-                width: 10,
+              Flexible(
+                child: SizedBox(
+                  width: 10,
+                ),
               ),
               Column(
                 children: [
-                  Container(
-                    width: 120,
-                    height: 20,
-                    child: Text(
-                      data.RestaurantNombre,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
                   Container(
                     width: 120,
                     height: 20,
                     child: Row(
                       children: [
                         SizedBox(
-                          child: Text("Cantidad:"),
-                          width: 60,
+                          child: Text("Total Platillos:"),
+                          //width: 60,
                         ),
+                        TabFlexibleS,
                         SizedBox(
                           child: Text(
-                            "${data.CarritoDetalleCantidad}",
+                            "${data.TotalPlatillos.toString()}",
                             textAlign: TextAlign.right,
                           ),
-                          width: 60,
+                          //width: 60,
                         ),
                       ],
                     ),
@@ -191,15 +435,36 @@ class ViewCarritoState extends State<ViewCarrito> {
                     child: Row(
                       children: [
                         SizedBox(
-                          child: Text("Precio: "),
-                          width: 45,
+                          child: Text("Envio :"),
+                          //width: 60,
                         ),
+                        TabFlexibleS,
                         SizedBox(
                           child: Text(
-                            "\$ ${data.menuPrecio}0",
+                            "${data.Comision.toString()}",
                             textAlign: TextAlign.right,
                           ),
-                          width: 75,
+                          //width: 60,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 120,
+                    height: 20,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          child: Text("SubTotal :"),
+                          //width: 65,
+                        ),
+                        TabFlexibleS,
+                        SizedBox(
+                          child: Text(
+                            "\$ ${data.Total.toString()}0",
+                            textAlign: TextAlign.right,
+                          ),
+                         /// width: 75,
                         ),
                       ],
                     ),
@@ -221,7 +486,7 @@ class ViewCarritoState extends State<ViewCarrito> {
                         SizedBox(
                           child: Text(
                             '\$ ' +
-                                (data.menuPrecio * data.CarritoDetalleCantidad)
+                                (data.Total + data.Comision)
                                     .toString() +
                                 '0',
                             style: TextStyle(
@@ -235,9 +500,6 @@ class ViewCarritoState extends State<ViewCarrito> {
                       ],
                     ),
                     //width: 70,
-                  ),
-                  Container(
-                    height: 15,
                   ),
                 ],
               ),
@@ -299,7 +561,8 @@ class ViewCarritoState extends State<ViewCarrito> {
           child: lista != null
               ? RefreshIndicator(
                   key: Estatus == 1 ? refreshKey : refreshKeyHist,
-                  child: Lista(Estatus),
+                  //child: Lista(Estatus),
+                  child: EncaLista(Estatus, _CP, _Colonia),
                   onRefresh: refreshList,
                 )
               : Center(child: CircularProgressIndicator()),
@@ -528,6 +791,16 @@ Future<List<CarritoModel>> ListViewCarrito(int id_usuario, int Estatus) async {
   if (repose.statusCode == 200 || repose.statusCode == 201) {
     List jsonResponse = json.decode(repose.body);
     return jsonResponse.map((job) => CarritoModel.fromJson(job)).toList();
+  } else {
+    throw Exception("Fallo!");
+  }
+}
+
+Future<List<EncaCarritoModel>> ListViewEncaCarrito(int id_usuario, int Estatus, String CP, String Colonia) async {
+  final repose = await get(CadenaConexion("/Carrito/VerCarritoEnca/${id_usuario}/${Estatus}/${CP}/${Colonia}"));
+  if (repose.statusCode == 200 || repose.statusCode == 201) {
+    List jsonResponse = json.decode(repose.body);
+    return jsonResponse.map((job) => EncaCarritoModel.fromJson(job)).toList();
   } else {
     throw Exception("Fallo!");
   }

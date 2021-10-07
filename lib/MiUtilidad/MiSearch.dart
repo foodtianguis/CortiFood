@@ -1,13 +1,9 @@
-import 'package:dartxero/MiFramework/MiAccionLogin.dart';
 import 'package:dartxero/MiFramework/MiAcciones.dart';
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
 import 'package:dartxero/MiModel/BusquedaModel.dart';
 import 'package:dartxero/MiPantallas/Busqueda/BusquedaDetalle.dart';
 import 'package:dartxero/MiPantallas/Busqueda/MiBusqueda.dart';
-import 'package:dartxero/MiPantallas/Carrito/AddCarrito.dart';
-import 'package:dartxero/MiUtilidad/stepper.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Search extends SearchDelegate{
   //final List<String> listExample;
@@ -34,17 +30,22 @@ class Search extends SearchDelegate{
     return Container(child: query != ''? BusquedaList(query): null,);
   }
 
-  List<String> recentList = ["Text 4","Text 3"];
+  List<String> recentList = [ "Desayunos","Comidas Corridas","Bebidas",
+                              "Mariscos","Comida Rapida","Postres",
+                              "Comida China","Comida Japonesa","Saludable"];
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
+    List<String> suggestionList = ["Desayunos","Comidas Corridas","Bebidas",
+                                   "Mariscos","Comida Rapida","Postres",
+                                   "Comida China","Comida Japonesa","Saludable"];
+    query.isEmpty ? suggestionList = recentList:suggestionList = [query];
     //sQuery.isEmpty ? suggestionList = recentList: suggestionList.addAll(listExample.where((element) => element.contains(sQuery)));
     return ListView.builder(itemBuilder: (context, index){
       return ListTile(
         title: Text(
           suggestionList[index],
         ),
-        leading: query.isEmpty ? Icon(Icons.access_time) : SizedBox(),
+        leading: query.isEmpty ? Icon(Icons.info_outline) : SizedBox(),
         onTap: () {
           sResult = suggestionList[index];
           showResults(context);

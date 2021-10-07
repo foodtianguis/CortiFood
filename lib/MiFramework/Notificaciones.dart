@@ -1,4 +1,4 @@
-import 'dart:async';
+ import 'dart:async';
 import 'dart:io';
 
 import 'package:dartxero/MiFramework/MiVariablesGlobales.dart';
@@ -8,13 +8,74 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 
+ FlutterLocalNotificationsPlugin LocalNotifications = FlutterLocalNotificationsPlugin();
+
+ const AndroidNotificationChannel channel = AndroidNotificationChannel(
+   'high_importance_channel', // id
+   'High Importance Notifications', // title
+   'This channel is used for important notifications.', // description
+   importance: Importance.max,
+   playSound: true,
+   enableVibration: true,
+ );
+
+ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+   await Firebase?.initializeApp();
+   print('Handling a background message ${message.messageId}');
+
+   RemoteNotification notification = message.notification;
+   String Argument = "No_Info";
+   if(Platform.isAndroid ){
+     AndroidNotification android = message.notification?.android;
+     if (notification != null && android != null) {
+       var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+         channel.id, channel.name, channel.description,
+         icon: 'app_icon',
+         importance: Importance.max, priority: Priority.high,  ticker: 'ticker', //sound: RawResourceAndroidNotificationSound('noti')
+       );
+       var iOSPlatformChannelSpecifics = new IOSNotificationDetails(presentSound: true);
+       LocalNotifications.show(
+         notification.hashCode,
+         notification.title,
+         notification.body,
+         NotificationDetails(android: androidPlatformChannelSpecifics),
+         payload: 'item x',
+       );
+
+       Argument = notification.title == 'Notificacion'? 'RestaurantMessage':
+       'UsuarioMessage';
+       NotificacionLocal.Notificacion = Argument;
+       NotificacionLocal.Title = notification.title;
+       NotificacionLocal.Body = notification.body;
+       // _MsjStreamController.sink.add(Argument);
+     }
+   } else if(Platform.isIOS ){
+     AppleNotification IOS = message.notification?.apple;
+     if (notification != null && IOS != null) {
+       //Argument = "${notification['data']['TipoNoti']}Message" ?? "No_Info";
+       LocalNotifications.show(
+         notification.hashCode,
+         notification.title,
+         notification.body,
+         NotificationDetails(
+           iOS: IOSNotificationDetails(
+             presentSound: true,
+           ),
+         ),
+         payload: 'Custom_Sound',
+       );
+     }
+   }
+ }
 
 class TokenNotificaciones{
   //FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  FlutterLocalNotificationsPlugin LocalNotifications = FlutterLocalNotificationsPlugin();
+
   String _token;
   Stream<String> _tokenStream;
 
@@ -25,23 +86,31 @@ class TokenNotificaciones{
       RegistrarToken(user.id, _token);
   }
 
-  static const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
-
   final _MsjStreamController = StreamController<String>.broadcast();
   Stream<String> get mensaje => _MsjStreamController.stream;
 
-
   Future<void> initToken(int id_Usuario) async {
+    WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
+
+    FirebaseMessaging?.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     FirebaseMessaging.instance.getToken(vapidKey: 'BGpdLRsMJKvFDD9odfPk92uBg-JbQbyoiZdah0XlUyrjG4SDgUsE1iC_kdRgt4Kn0CO7K3RTswPZt61NNuO0XoA').then(setToken);
       _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
       _tokenStream.listen(setToken);
+
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('app_icon');
+
+    final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: IOSInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+      ),
+    );
+    LocalNotifications.initialize(initializationSettings);
 
     RegistrarToken(user.id, _token);
       /*
@@ -57,23 +126,24 @@ class TokenNotificaciones{
     });
     */
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification notification = message.notification;
       String Argument = "No_Info";
       if(Platform.isAndroid ){
         AndroidNotification android = message.notification?.android;
         if (notification != null && android != null) {
-          //Argument = "${notification['data']['TipoNoti']}Message" ?? "No_Info";
+          var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+              channel.id, channel.name, channel.description,
+              icon: 'app_icon',
+              importance: Importance.max, priority: Priority.high,  ticker: 'ticker', //sound: RawResourceAndroidNotificationSound('noti')
+          );
+          var iOSPlatformChannelSpecifics = new IOSNotificationDetails(presentSound: true);
           LocalNotifications.show(
-              notification.hashCode,
-              notification.title,
-              notification.body,
-              NotificationDetails(android: AndroidNotificationDetails(
-                                            channel.id,
-                                            channel.name,
-                                            channel.description,
-                                            icon: 'Utilerias/Icon/LogoGIOS.png',),
-            )
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(android: androidPlatformChannelSpecifics),
+            payload: 'item x',
           );
 
           Argument = notification.title == 'Notificacion'? 'RestaurantMessage':
@@ -93,8 +163,10 @@ class TokenNotificaciones{
               notification.body,
               NotificationDetails(
                 iOS: IOSNotificationDetails(
+                  presentSound: true,
                 ),
-              )
+              ),
+              payload: 'Custom_Sound',
           );
         }
       }
@@ -166,6 +238,7 @@ class TokenNotificaciones{
       },
     );*/
   }
+
 }
 
 Future<void> RegistrarToken(int id_Usuario, String sToken) async {
@@ -197,3 +270,75 @@ Future<void> RegistrarTokenRest(int id_Restaurant, String sToken) async {
     print("Error en token: ${ex.toString()}");
   }
 }
+
+class Notificacion{
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+  String selectedNotificationPayload;
+
+  void _requestPermissions() {
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        MacOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+
+  Future<void> Notificaciones() async {
+
+    _requestPermissions();
+
+    final NotificationAppLaunchDetails notificationAppLaunchDetails =
+    await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+      selectedNotificationPayload = notificationAppLaunchDetails.payload;
+    }
+
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('app_icon');
+
+    final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: IOSInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+      ),
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (String payload) async {
+          if (payload != null) {
+            debugPrint('notification payload: $payload');
+          }
+          selectedNotificationPayload = payload;
+        });
+  }
+
+
+}
+
+ class ReceivedNotification {
+   ReceivedNotification({
+     this.id,
+     this.title,
+     this.body,
+     this.payload,
+   });
+
+   final int id;
+   final String title;
+   final String body;
+   final String payload;
+ }

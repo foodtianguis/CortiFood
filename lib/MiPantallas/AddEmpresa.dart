@@ -488,7 +488,7 @@ class _AddDatosEmpresa extends State<AddDatosEmpresa> {
           return CupertinoAlertDialog(
             //title: Text("From where do you want to take the photo?"),
             content: SingleChildScrollView(
-              child: Text('Se creo Empresa: ${nick}'),
+              child: Text('Se creo Restaurant: ${nick}'),
             ),
           );
         });

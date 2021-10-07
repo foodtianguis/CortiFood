@@ -73,22 +73,20 @@ class ViewBusquedaState extends State<ViewBusqueda> {
           //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 120,
-              child: Text(
-                data.Nombre,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15,
-                    color: ColorLabel),
+                width: 100,
+                child: Text(
+                  data.Nombre,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                      color: ColorLabel),
+                ),
               ),
-            ),
-            Flexible(
-              child: SizedBox(
+            SizedBox(
                 width: 5,
-              ),
             ),
             Container(
-              width: 120,
+              width: 100,
               child: Text(
                 data.Descripcion != null ? data.Descripcion : '',
                 style: TextStyle(
@@ -99,16 +97,18 @@ class ViewBusquedaState extends State<ViewBusqueda> {
             ),
           ],
         ),
-        SizedBox(
-          width: 5,
+        Flexible(
+          child: SizedBox(
+            width: 5,
+          ),
         ),
         Container(
           child: SizedBox(
             child: Text(
               '\$ ' + data.Precio.toString() + '0',
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 10),
             ),
-            width: 40,
+           // width: 40,
           ),
         ),
         Flexible(

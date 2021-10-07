@@ -302,7 +302,7 @@ class AddPedidoState extends State<AddPedido> {
                 child: RaisedButton(
                   child: Text(
                     sComprar,
-                    style: EstiloLetraBtn,
+                    style: TextStyle(fontSize: 15.0, color: ColorBtnTxt),
                   ),
                   color: ColorBoton,
                   splashColor: splashBtn,
@@ -353,7 +353,7 @@ class AddPedidoState extends State<AddPedido> {
                 child: RaisedButton(
                   child: Text(
                     sVpedido,
-                    style: EstiloLetraBtn,
+                    style: TextStyle(fontSize: 15.0, color: ColorBtnTxt),
                   ),
                   color: ColorBoton,
                   splashColor: splashBtn,

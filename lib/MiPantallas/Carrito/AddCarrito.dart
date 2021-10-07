@@ -129,8 +129,10 @@ class AddCarritoState extends State<AddCarrito> {
                   },
                 ),
               ),
-              SizedBox(
-                width: 50,
+              Flexible(
+                child: SizedBox(
+                  width: 50,
+                ),
               ),
               Container(
                 //padding: EdgeInsets.only(top: 5.0),
